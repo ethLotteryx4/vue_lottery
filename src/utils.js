@@ -314,3 +314,7 @@ export async function pool_data(pk, acc) {
     await lottery.methods.getId().call({from:acc}).then(function(result){pool_result.phase = result;});
     return pool_result;
 }
+
+export function is_address(acc) {
+    return web3.utils.isAddress(acc)
+}
