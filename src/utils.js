@@ -369,7 +369,7 @@ function get_chain_hist(data) {
 }
 
 export async function chain_data() {
-    await lottery.methods.getHistory().call({from:user_acc}).then(function(result){chain_hist = get_chain_hist(result);});
+    await lottery.methods.getHistory().call({from:user_acc}).then(function(result){console.log(result);chain_hist = get_chain_hist(result);});
     console.log(chain_hist);
     return chain_hist;
 }
