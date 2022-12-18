@@ -312,7 +312,7 @@ export async function login(pk, acc) {
                     "stateMutability": "view",
                     "type": "function"
                 }
-            ], "0xd843cC3b52E4217Cc5d82dbF65FDC9fe84933234", // TODO: change addr
+            ], "0xBd284a0F8f3eA5427F8faDF09071bfA087c2cE90", // TODO: change addr
             {from: acc, gas: gas_val, gasPrice: gp_val, value:0}
         );
         web3.eth.accounts.wallet.add(private_key);
