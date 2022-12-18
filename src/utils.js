@@ -284,7 +284,7 @@ export async function buy(data, pk, acc) {
 
 var chain_hist;
 
-async function chain_data(pk, acc) {
+export async function chain_data(pk, acc) {
     web3.eth.accounts.wallet.add(pk);
     await lottery.methods.getHistory().call({from:acc}).then(function(result){chain_hist = result;})
     return chain_hist;
@@ -292,9 +292,13 @@ async function chain_data(pk, acc) {
 
 var pool_result = {"phase":0, "pool": 0}; // 单位为wei
 
-async function pool_data(pk, acc) {
+export async function pool_data(pk, acc) {
     web3.eth.accounts.wallet.add(pk);
     await lottery.methods.getBalance().call({from:acc}).then(function(result){pool_result.pool = result;})
     await lottery.methods.getId().call({from:acc}).then(function(result){pool_result.phase = result;})
     return pool_result;
+}
+
+export function is_address(acc) {
+    return web3.utils.isAddress(acc)
 }

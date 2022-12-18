@@ -35,6 +35,7 @@
 
 <script>
 /* eslint-disable */
+import * as utils from "../utils.js"
 export default {
     nema:"Chain",
     data() {
@@ -55,7 +56,24 @@ export default {
     },
     methods: {
         refresh() {
-            console.log('debug')
+            console.log('refreshed chain data')
+            var pk = document.getElementById("pk").value;
+            var acc =document.getElementById("acc").value;
+            if (!utils.is_address(acc)) {
+                alert("请输入钱包地址");
+                return;
+            }
+            var chain_hist = utils.chain_data(pk, acc);
+            chain_hist.forEach(phase => {
+                phase.forEach(data => {
+                    this.chain_data.push({
+                        "phase":phase.phase,
+                        "winner":data.id,
+                        "money": data.money,
+                        "number": data.number
+                    })
+                });
+            });
         }
     }
 }
