@@ -1,6 +1,6 @@
 <template>
     <div class="chain">
-        <button class="refresh" @click="refresh">点击刷新中将信息</button>
+        <button class="refresh" @click="refresh">点击刷新中奖信息</button>
         <table>
                 <caption>
                     <font size="5" color="#373f27"><b>以往中奖信息查询</b></font>

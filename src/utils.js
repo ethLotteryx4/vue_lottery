@@ -1,9 +1,8 @@
-/* eslint-disable */
 var Web3 = require('web3');
 const network = "goerli";
 const api_key = "d602fa919c86441581fd91bf2e84f513"; // manager
-var private_key; // user
-var user_acc; // user
+// var private_key; // user
+// var user_acc; // user
 
 const web3 = new Web3(new Web3.providers.HttpProvider(`https://${network}.infura.io/v3/${api_key}`));
 const gas_val = 1000000;
@@ -255,7 +254,7 @@ const lottery = new web3.eth.Contract(
             "stateMutability": "view",
             "type": "function"
         }
-    ], "0xbA1Cca1Aa177CD849568E369eAC77D778a06be00",
+    ], "0xbA1Cca1Aa177CD849568E369eAC77D778a06be00", // TODO: change addr
     {from: user_acc, gas: gas_val, gasPrice: gp_val, value:0}
 );
 
@@ -266,9 +265,9 @@ export async function buy(data, pk, acc) {
         return false
     try {
         web3.eth.accounts.wallet.add(pk);
-        l = data.length;
-        output = Array(100).fill(0);
-        val = 0;
+        var l = data.length;
+        var output = Array(100).fill(0);
+        var val = 0;
         for (var i = 0; i < l; i++){
             output[data[i].num] = data[i].value;
             val += data[i].value;
@@ -284,17 +283,34 @@ export async function buy(data, pk, acc) {
 
 var chain_hist;
 
-async function chain_data(pk, acc) {
+function get_chain_hist(data) {
+    var len = data.len;
+    var output = Array(len);
+    var begin = 0;
+    for (var i = 0; i < len; i++)
+    {
+        output[i] = {phase: i, phase_data: Array()}
+        for (var j = 0; j < data.eachlen[i]; j++)
+        {
+            var obj = {id: data.players[begin + j], money: data.money[begin + j], number: // TODO:};
+            output[i].phase_data.push(obj);
+        }
+        begin += data.eachlen[i];
+    }
+    return output;
+}
+
+export async function chain_data(pk, acc) {
     web3.eth.accounts.wallet.add(pk);
-    await lottery.methods.getHistory().call({from:acc}).then(function(result){chain_hist = result;})
+    await lottery.methods.getHistory().call({from:acc}).then(function(result){chain_hist = get_chain_hist(result);});
     return chain_hist;
 }
 
-var pool_result = {"phase":0, "pool": 0}; // 单位为wei
+var pool_result = {phase:0, pool: 0}; // 单位为wei
 
-async function pool_data(pk, acc) {
+export async function pool_data(pk, acc) {
     web3.eth.accounts.wallet.add(pk);
-    await lottery.methods.getBalance().call({from:acc}).then(function(result){pool_result.pool = result;})
-    await lottery.methods.getId().call({from:acc}).then(function(result){pool_result.phase = result;})
+    await lottery.methods.getBalance().call({from:acc}).then(function(result){pool_result.pool = result;});
+    await lottery.methods.getId().call({from:acc}).then(function(result){pool_result.phase = result;});
     return pool_result;
 }
