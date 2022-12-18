@@ -8,10 +8,14 @@ const web3 = new Web3(new Web3.providers.HttpProvider(`https://${network}.infura
 const gas_val = 1000000;
 const gp_val = "10000000000";
 
-export function login(pk, acc) {
+export async function login(pk, acc) {
+    if (!is_address(acc))
+        return false;
     try
     {
-        lottery = new web3.eth.Contract(
+        private_key = pk;
+        user_acc = acc;
+        lottery = await new web3.eth.Contract(
             [
                 {
                     "inputs": [],
@@ -308,20 +312,14 @@ export function login(pk, acc) {
                     "stateMutability": "view",
                     "type": "function"
                 }
-            ], "0xC9e1feBb1C4FDAf7f41d79a40bcE18c2160d9018", 
-            {from: user_acc, gas: gas_val, gasPrice: gp_val, value:0}
+            ], "0xC9e1feBb1C4FDAf7f41d79a40bcE18c2160d9018", // TODO: change addr
+            {from: acc, gas: gas_val, gasPrice: gp_val, value:0}
         );
-        if (JSON.stringify(lottery) == {})
-            return false;
-        var wallet = web3.eth.accounts.wallet.add(private_key);
-        if (JSON.stringify(wallet) == {})
-            return false;
-        private_key = pk;
-        user_acc = acc;
         return true;
     }
     catch(e)
     {
+        lottery = {};
         console.log(e);
         return false;
     }
@@ -350,7 +348,7 @@ export async function buy(data) {
     }
 }
 
-var chain_hist;
+var chain_hist = [];
 
 function get_chain_hist(data) {
     var len = data[0];
@@ -384,4 +382,8 @@ export async function pool_data() {
 
 export function is_address(acc) {
     return web3.utils.isAddress(acc)
+}
+
+export function logged() {
+    return Object.keys(lottery).length != 0
 }

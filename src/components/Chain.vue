@@ -55,15 +55,16 @@ export default {
         }
     },
     methods: {
-        refresh() {
+        async refresh() {
             console.log('refreshed chain data')
             var pk = document.getElementById("pk").value;
-            var acc =document.getElementById("acc").value;
-            if (!utils.is_address(acc)) {
-                alert("请输入账户地址");
+            var acc = document.getElementById("acc").value;
+            if (!utils.logged()) {
+                alert("请先登录！");
                 return;
             }
-            var chain_hist = utils.chain_data(pk, acc);
+            var chain_hist = await utils.chain_data();
+            console.log(chain_hist)
             chain_hist.forEach(phase => {
                 phase.forEach(data => {
                     this.chain_data.push({
