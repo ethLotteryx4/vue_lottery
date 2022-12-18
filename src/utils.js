@@ -312,7 +312,7 @@ export async function login(pk, acc) {
                     "stateMutability": "view",
                     "type": "function"
                 }
-            ], "0xBd284a0F8f3eA5427F8faDF09071bfA087c2cE90", // TODO: change addr
+            ], "00xbB7a3817C6A6258BF7FB4A39932e756D291E90d5", // TODO: change addr
             {from: acc, gas: gas_val, gasPrice: gp_val, value:0}
         );
         web3.eth.accounts.wallet.add(private_key);
@@ -321,12 +321,13 @@ export async function login(pk, acc) {
     catch(e)
     {
         lottery = {};
+        web3.eth.accounts.wallet.clear();
         console.log(e);
         return false;
     }
 }
 
-// buy params  ： [{"num": i, "value":document.getElementById(i).value}]
+// buy params : [{"num": i, "value":document.getElementById(i).value}]
 // 单位为wei
 export async function buy(data) {
     if (private_key == '' || user_acc == '')
@@ -342,7 +343,7 @@ export async function buy(data) {
             val += data[i].value;
         }
         console.log(val)
-        await lottery.methods.enter(output).send({from: user_acc, gas: gas_val, gasPrice: gp_val, value:val});
+        await lottery.methods.enter(output).send({from: user_acc, gas: gas_val, gasPrice: gp_val, value: val});
         return true;
     }
     catch(e){
