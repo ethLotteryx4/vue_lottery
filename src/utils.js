@@ -333,6 +333,7 @@ export async function buy(data) {
         return false
     try 
     {
+        console.log(data)
         var l = data.length;
         var output = Array(100).fill(0);
         var val = 0;
@@ -340,6 +341,7 @@ export async function buy(data) {
             output[data[i].num] = data[i].value;
             val += data[i].value;
         }
+        console.log(val)
         await lottery.methods.enter(output).send({from: user_acc, gas: gas_val, gasPrice: gp_val, value:val});
         return true;
     }
