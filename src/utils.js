@@ -315,6 +315,7 @@ export async function login(pk, acc) {
             ], "0xd843cC3b52E4217Cc5d82dbF65FDC9fe84933234", // TODO: change addr
             {from: acc, gas: gas_val, gasPrice: gp_val, value:0}
         );
+        web3.eth.accounts.wallet.add(private_key);
         return true;
     }
     catch(e)

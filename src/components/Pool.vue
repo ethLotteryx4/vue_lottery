@@ -54,6 +54,7 @@ template.default {
 div.pool {
     widows: 450px;
     height: 220px;
+    /* margin-bottom: 20px; */
     /* writing-mode: vertical-lr; */
 }
 span.desc {
@@ -68,6 +69,7 @@ span.pool {
     text-align: center;
     color: #fbde00;
     width: 120px;
+    height: 80px !important;
 }
 span.info {
     clear: left;
@@ -75,5 +77,6 @@ span.info {
     font-size: 100%;
     /* font-weight: 1000; */
     color: #fbde00;
+    margin-bottom: 20px;
 }
 </style>

@@ -88,7 +88,7 @@ th{
         width: 100px;
 }
 button.refresh {
-    margin: 40px 0px 20px 0px;
+    margin: 100px 0px 20px 0px;
     width: 300px;
     height: 50px;
     background-color: #FFAE00;
