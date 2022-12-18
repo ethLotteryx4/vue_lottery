@@ -11,28 +11,30 @@ div.cell {
     flex-direction:column;
     display:flex !important;
     border:rgb(0, 0, 0) solid 1px;
-    width:80px !important;
+    width:120px !important;
+    height: 100px;
     background-color:#ffffff;
     justify-content:center;
 }
 span.number {
-    width:80px;font-size:20px;text-align:center;
+    width:120px;font-size:20px;text-align:center;
     color:rgb(0, 0, 124);
     font-weight:800;
     user-select:none;
     border:rgb(255, 255, 255, 1) solid 0;
     border-bottom:rgba(0, 0, 0, 1) solid 1px !important;
     margin-bottom: 10px;
+    padding-bottom: 10px;
     /* height: 40px; */
 }
 input.count {
-    margin:0px 20px 10px 20px;
-    width:40px;
+    margin:2.5px 0px 0px 10px;
+    width:90px;
     height: 30px;
     overflow-x:scroll;
     color:rgb(0, 0, 0);
     /* text-align:right; */
-    padding-left: 7.5px;
+    padding-left: 12.5px;
     /* padding-top: 5px; */
     vertical-align:middle;
     white-space:nowrap;

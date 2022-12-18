@@ -53,7 +53,7 @@ template.default {
 }
 div.pool {
     widows: 450px;
-    height: 220px;
+    height: 180px;
     /* margin-bottom: 20px; */
     /* writing-mode: vertical-lr; */
 }
