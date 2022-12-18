@@ -30,7 +30,6 @@ export default {
     data () {
         return {
             rows: [],
-            data: [],
             acc: "",
             pk: ""
         }
@@ -55,7 +54,8 @@ export default {
                 alert("请先登录！")
                 return;
             }
-            if (utils.buy(this.data, this.pk, this.acc)) {
+            var data = this.$refs.form.form_data();
+            if (utils.buy(data, this.pk, this.acc)) {
                 alert("购买成功！")
             } else {
                 alert("购买失败")

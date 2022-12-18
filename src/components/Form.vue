@@ -33,7 +33,6 @@ export default {
                     data.push(cell)
                 });
             });
-            console.log(data);
             return data;
         }
     }
