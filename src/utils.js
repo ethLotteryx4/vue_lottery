@@ -1,270 +1,336 @@
 var Web3 = require('web3');
 const network = "goerli";
 const api_key = "d602fa919c86441581fd91bf2e84f513"; // manager
-// var private_key; // user
-// var user_acc; // user
-
+var private_key; // user
+var user_acc; // user
+var lottery = {};
 const web3 = new Web3(new Web3.providers.HttpProvider(`https://${network}.infura.io/v3/${api_key}`));
 const gas_val = 1000000;
 const gp_val = "10000000000";
 
-const lottery = new web3.eth.Contract(
-    // TODO: 修改ABI
-    [
-        {
-            "inputs": [],
-            "stateMutability": "nonpayable",
-            "type": "constructor"
-        },
-        {
-            "inputs": [
+export function login(pk, acc) {
+    try
+    {
+        lottery = new web3.eth.Contract(
+            [
                 {
-                    "internalType": "uint256[100]",
-                    "name": "tot",
-                    "type": "uint256[100]"
-                }
-            ],
-            "name": "enter",
-            "outputs": [],
-            "stateMutability": "payable",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "getBalance",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "getId",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "getPlayer",
-            "outputs": [
-                {
-                    "internalType": "address payable[]",
-                    "name": "",
-                    "type": "address[]"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "getRandomNumber",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "lotteryy",
-                    "type": "uint256"
-                }
-            ],
-            "name": "getWinnerById",
-            "outputs": [
-                {
-                    "internalType": "address payable[]",
-                    "name": "",
-                    "type": "address[]"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "id",
-                    "type": "uint256"
+                    "inputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "constructor"
                 },
                 {
-                    "internalType": "address",
-                    "name": "add",
-                    "type": "address"
-                }
-            ],
-            "name": "getWinnerMoneyByAddress",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "lotteryid",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
+                    "inputs": [
+                        {
+                            "internalType": "uint256[100]",
+                            "name": "tot",
+                            "type": "uint256[100]"
+                        }
+                    ],
+                    "name": "enter",
+                    "outputs": [],
+                    "stateMutability": "payable",
+                    "type": "function"
                 },
                 {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "name": "lotteryinfo",
-            "outputs": [
-                {
-                    "internalType": "address payable",
-                    "name": "",
-                    "type": "address"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "own",
-            "outputs": [
-                {
-                    "internalType": "address",
-                    "name": "",
-                    "type": "address"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "address",
-                    "name": "",
-                    "type": "address"
+                    "inputs": [],
+                    "name": "getBalance",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
                 },
                 {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "name": "peopleinfo",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "pickWinner",
-            "outputs": [
-                {
-                    "internalType": "bool",
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "name": "players",
-            "outputs": [
-                {
-                    "internalType": "address payable",
-                    "name": "",
-                    "type": "address"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
+                    "inputs": [],
+                    "name": "getHistory",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256[]",
+                            "name": "",
+                            "type": "uint256[]"
+                        },
+                        {
+                            "internalType": "uint256[]",
+                            "name": "",
+                            "type": "uint256[]"
+                        },
+                        {
+                            "internalType": "address[]",
+                            "name": "",
+                            "type": "address[]"
+                        },
+                        {
+                            "internalType": "uint256[]",
+                            "name": "",
+                            "type": "uint256[]"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
                 },
                 {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "name": "winnerhistory",
-            "outputs": [
+                    "inputs": [],
+                    "name": "getId",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
                 {
-                    "internalType": "address payable",
-                    "name": "",
-                    "type": "address"
+                    "inputs": [],
+                    "name": "getPlayer",
+                    "outputs": [
+                        {
+                            "internalType": "address payable[]",
+                            "name": "",
+                            "type": "address[]"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "getRandomNumber",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "lotteryy",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "getWinnerById",
+                    "outputs": [
+                        {
+                            "internalType": "address payable[]",
+                            "name": "",
+                            "type": "address[]"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "add",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "getWinnerMoneyByAddress",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "lotteryid",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "lotteryinfo",
+                    "outputs": [
+                        {
+                            "internalType": "address payable",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "own",
+                    "outputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "peopleinfo",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "pickWinner",
+                    "outputs": [
+                        {
+                            "internalType": "bool",
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "players",
+                    "outputs": [
+                        {
+                            "internalType": "address payable",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "winnerhistory",
+                    "outputs": [
+                        {
+                            "internalType": "address payable",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "winnum",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
                 }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        }
-    ], "0xbA1Cca1Aa177CD849568E369eAC77D778a06be00", // TODO: change addr
-    {from: user_acc, gas: gas_val, gasPrice: gp_val, value:0}
-);
+            ], "0xC9e1feBb1C4FDAf7f41d79a40bcE18c2160d9018", // TODO: change addr
+            {from: user_acc, gas: gas_val, gasPrice: gp_val, value:0}
+        );
+        if (JSON.stringify(lottery) == {})
+            return false;
+        private_key = pk;
+        user_acc = acc;
+        return true;
+    }
+    catch(e)
+    {
+        console.log(e);
+        return false;
+    }
+}
 
 // buy params  ： [{"num": i, "value":document.getElementById(i).value}]
 // 单位为wei
-export async function buy(data, pk, acc) {
-    if (pk == '' || acc == '')
+export async function buy(data) {
+    if (private_key == '' || user_acc == '')
         return false
     try {
-        web3.eth.accounts.wallet.add(pk);
+        web3.eth.accounts.wallet.add(private_key);
         var l = data.length;
         var output = Array(100).fill(0);
         var val = 0;
@@ -272,7 +338,7 @@ export async function buy(data, pk, acc) {
             output[data[i].num] = data[i].value;
             val += data[i].value;
         }
-        await lottery.methods.enter(output).send({from: acc, gas: gas_val, gasPrice: gp_val, value:val});
+        await lottery.methods.enter(output).send({from: user_acc, gas: gas_val, gasPrice: gp_val, value:val});
         return true;
     }
     catch(e){
@@ -284,15 +350,15 @@ export async function buy(data, pk, acc) {
 var chain_hist;
 
 function get_chain_hist(data) {
-    var len = data.len;
+    var len = data[0];
     var output = Array(len);
     var begin = 0;
     for (var i = 0; i < len; i++)
     {
         output[i] = {phase: i, phase_data: Array()}
-        for (var j = 0; j < data.eachlen[i]; j++)
+        for (var j = 0; j < data[1][i]; j++)
         {
-            var obj = {id: data.players[begin + j], money: data.money[begin + j], number: // TODO:};
+            var obj = {id: data[3][begin + j], money: data[4][begin + j], number: data[2][begin + j]};
             output[i].phase_data.push(obj);
         }
         begin += data.eachlen[i];
@@ -300,18 +366,18 @@ function get_chain_hist(data) {
     return output;
 }
 
-export async function chain_data(pk, acc) {
-    web3.eth.accounts.wallet.add(pk);
-    await lottery.methods.getHistory().call({from:acc}).then(function(result){chain_hist = get_chain_hist(result);});
+export async function chain_data() {
+    web3.eth.accounts.wallet.add(private_key);
+    await lottery.methods.getHistory().call({from:user_acc}).then(function(result){chain_hist = get_chain_hist(result);});
     return chain_hist;
 }
 
 var pool_result = {phase:0, pool: 0}; // 单位为wei
 
-export async function pool_data(pk, acc) {
-    web3.eth.accounts.wallet.add(pk);
-    await lottery.methods.getBalance().call({from:acc}).then(function(result){pool_result.pool = result;});
-    await lottery.methods.getId().call({from:acc}).then(function(result){pool_result.phase = result;});
+export async function pool_data() {
+    web3.eth.accounts.wallet.add(private_key);
+    await lottery.methods.getBalance().call({from:user_acc}).then(function(result){pool_result.pool = result;});
+    await lottery.methods.getId().call({from:user_acc}).then(function(result){pool_result.phase = result;});
     return pool_result;
 }
 
