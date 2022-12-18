@@ -352,7 +352,8 @@ export async function buy(data) {
 var chain_hist = [];
 
 function get_chain_hist(data) {
-    var len = data[0];
+    console.log(data);
+    var len = parseInt(data[0]);
     var output = Array(len);
     var begin = 0;
     for (var i = 0; i < len; i++)
@@ -370,7 +371,7 @@ function get_chain_hist(data) {
 }
 
 export async function chain_data() {
-    await lottery.methods.getHistory().call({from:user_acc}).then(function(result){console.log(result);chain_hist = get_chain_hist(result);});
+    await lottery.methods.getHistory().call({from:user_acc}).then(function(result){chain_hist = get_chain_hist(result);});
     console.log(chain_hist);
     return chain_hist;
 }
