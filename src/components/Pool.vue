@@ -30,12 +30,12 @@ export default {
     }
   },
   methods: {
-    refresh() {
+    async refresh() {
         if (!utils.logged()) {
             alert("请先登录！");
             return;
         }
-        var data = utils.pool_data();
+        var data = await utils.pool_data();
         var reg = /^[0-9]+[.]?[0-9]*$/
         if (reg.test(data.phase))
             this.phase = data.phase;
