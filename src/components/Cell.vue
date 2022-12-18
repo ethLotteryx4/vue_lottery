@@ -1,7 +1,7 @@
 <template id="cell">
     <div class="cell">
         <span class="number"> {{ number }} </span>
-        <br>
+        <!-- <br> -->
         <input class="count" type="number" step="0.01" min="0" v-model="value" @blur="trim" />
     </div>
 </template>
@@ -11,30 +11,34 @@ div.cell {
     flex-direction:column;
     display:flex !important;
     border:rgb(0, 0, 0) solid 1px;
-    width:100px !important;
-    background-color:#f8f5d6;
+    width:80px !important;
+    background-color:#ffffff;
     justify-content:center;
 }
 span.number {
-    width:100px;font-size:16px;text-align:center;
-    color:rgb(21, 76, 76);
+    width:80px;font-size:20px;text-align:center;
+    color:rgb(0, 0, 124);
     font-weight:800;
     user-select:none;
     border:rgb(255, 255, 255, 1) solid 0;
     border-bottom:rgba(0, 0, 0, 1) solid 1px !important;
+    margin-bottom: 10px;
+    /* height: 40px; */
 }
 input.count {
-    margin:0px 0px 10px 10px;
-    width:85px;
+    margin:0px 20px 10px 20px;
+    width:40px;
     height: 30px;
     overflow-x:scroll;
     color:rgb(0, 0, 0);
-    text-align:center;
+    /* text-align:right; */
+    padding-left: 7.5px;
+    /* padding-top: 5px; */
     vertical-align:middle;
     white-space:nowrap;
     text-overflow:ellipsis;
     overflow-y:hidden;
-    background-color:#f8f5d6;
+    background-color:#ffffff;
     border:rgb(255, 255, 255, 1) solid 0;
     font-weight: 500;
     font-size: medium;

@@ -3,7 +3,7 @@
         <button class="refresh" @click="refresh">点击刷新中奖信息</button>
         <table>
                 <caption>
-                    <font size="5" color="#373f27"><b>以往中奖信息查询</b></font>
+                    <font size="5" color="#ffffff"><b>以往中奖信息查询</b></font>
                 </caption>
                 <thead>
                     <tr>
@@ -60,7 +60,7 @@ export default {
             var pk = document.getElementById("pk").value;
             var acc =document.getElementById("acc").value;
             if (!utils.is_address(acc)) {
-                alert("请输入钱包地址");
+                alert("请输入账户地址");
                 return;
             }
             var chain_hist = utils.chain_data(pk, acc);
@@ -94,13 +94,18 @@ table {
 th{
         text-align: center;
         border: 1px solid;
-        background-color:#f8f5d6;
+        background-color:#ffffff;
         width: 100px;
 }
 button.refresh {
-    margin: 0px 0px 20px 0px;
+    margin: 40px 0px 20px 0px;
     width: 300px;
     height: 50px;
-    background-color: #FFCCCC;
+    background-color: #FFAE00;
+    border: 0px;
+    font-size: 125%;
+    font-weight: 600;
+    color: #ffffff;
+    
 }
 </style>

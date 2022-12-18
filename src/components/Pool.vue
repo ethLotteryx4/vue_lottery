@@ -1,6 +1,6 @@
 <template class="default">
     <div class="pool" :style="{
-        backgroundImage: 'url(' + bg + ')',
+        // backgroundImage: 'url(' + bg + ')',
         backgroundRepeat:'no-repeat',
         backgroundSize: '100%, 100%'}">
         <span class="desc">
@@ -30,7 +30,7 @@ export default {
         var pk = document.getElementById("pk").value;
         var acc =document.getElementById("acc").value;
         if (!utils.is_address(acc)) {
-            alert("请输入钱包地址");
+            alert("请输入账户地址");
             return;
         }
         var data = utils.pool_data(pk, acc);
@@ -51,16 +51,17 @@ template.default {
 }
 div.pool {
     widows: 400px;
-    height: 400px
+    height: 200px
 }
 span.desc {
     font-weight: 800;
     font-size:xxx-large;
+    color: #3d4353;
 }
 span.pool {
     padding: 0px 0px 0px 0px;
     font-size: 750%;
     font-weight: 1000;
-    color: #840303;
+    color: #fbde00;
 }
 </style>
