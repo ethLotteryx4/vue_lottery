@@ -27,13 +27,11 @@ export default {
   },
   methods: {
     refresh() {
-        var pk = document.getElementById("pk").value;
-        var acc =document.getElementById("acc").value;
-        if (!utils.is_address(acc)) {
-            alert("请输入钱包地址");
+        if (!utils.logged()) {
+            alert("请先登录！");
             return;
         }
-        var data = utils.pool_data(pk, acc);
+        var data = utils.pool_data();
         var reg = /^[0-9]+[.]?[0-9]*$/
         if (reg.test(data.phase))
             this.phase = data.phase;

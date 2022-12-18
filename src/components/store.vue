@@ -35,17 +35,24 @@ export default {
             pk: ""
         }
     },
+    created () {
+            this.acc = localStorage.getItem("acc");
+            this.pk = localStorage.getItem("pk");
+    },
     methods: {
-        login() {
-            // TODO:
-            if (!utils.is_address(acc)) {
-                alert("请输入正确的钱包地址！")
-                return;
+        async login() {
+            var state = await utils.login(this.pk, this.acc);
+            if (state) {
+                localStorage.setItem("acc", this.acc);
+                localStorage.setItem("pk", this.pk);
+                alert("登录成功！");
+            } else {
+                alert("登录失败");
             }
         },
         submit() {
-            if (!utils.is_address(acc)) {
-                alert("请输入正确的钱包地址！")
+            if (!utils.logged()) {
+                alert("请先登录！")
                 return;
             }
             if (utils.buy(this.data, this.pk, this.acc)) {
