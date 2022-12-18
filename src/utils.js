@@ -308,10 +308,13 @@ export function login(pk, acc) {
                     "stateMutability": "view",
                     "type": "function"
                 }
-            ], "0xC9e1feBb1C4FDAf7f41d79a40bcE18c2160d9018", // TODO: change addr
+            ], "0xC9e1feBb1C4FDAf7f41d79a40bcE18c2160d9018", 
             {from: user_acc, gas: gas_val, gasPrice: gp_val, value:0}
         );
         if (JSON.stringify(lottery) == {})
+            return false;
+        var wallet = web3.eth.accounts.wallet.add(private_key);
+        if (JSON.stringify(wallet) == {})
             return false;
         private_key = pk;
         user_acc = acc;
@@ -329,8 +332,8 @@ export function login(pk, acc) {
 export async function buy(data) {
     if (private_key == '' || user_acc == '')
         return false
-    try {
-        web3.eth.accounts.wallet.add(private_key);
+    try 
+    {
         var l = data.length;
         var output = Array(100).fill(0);
         var val = 0;
@@ -367,7 +370,6 @@ function get_chain_hist(data) {
 }
 
 export async function chain_data() {
-    web3.eth.accounts.wallet.add(private_key);
     await lottery.methods.getHistory().call({from:user_acc}).then(function(result){chain_hist = get_chain_hist(result);});
     return chain_hist;
 }
@@ -375,7 +377,6 @@ export async function chain_data() {
 var pool_result = {phase:0, pool: 0}; // 单位为wei
 
 export async function pool_data() {
-    web3.eth.accounts.wallet.add(private_key);
     await lottery.methods.getBalance().call({from:user_acc}).then(function(result){pool_result.pool = result;});
     await lottery.methods.getId().call({from:user_acc}).then(function(result){pool_result.phase = result;});
     return pool_result;
