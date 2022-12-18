@@ -40,18 +40,7 @@ export default {
     nema:"Chain",
     data() {
         return {
-            chain_data: [{
-                "phase": 1,
-                "winner": 123,
-                "money": 1000,
-                "number": 12
-            },
-            {
-                "phase": 1,
-                "winner": 123,
-                "money": 1000,
-                "number": 12
-            }]
+            chain_data: []
         }
     },
     methods: {

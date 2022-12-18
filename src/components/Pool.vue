@@ -7,8 +7,12 @@
             当前第{{ phase }}期奖池：
         </span>
     <br>
-        <span class="pool" @mouseover="refresh">
+        <span class="pool" @click="refresh">
             {{ pool }}
+        </span>
+        <br>
+        <span class="info">
+            (点击刷新)
         </span>
     </div>
 </template>
@@ -48,8 +52,9 @@ template.default {
     align-content: center;
 }
 div.pool {
-    widows: 400px;
-    height: 200px
+    widows: 450px;
+    height: 220px;
+    /* writing-mode: vertical-lr; */
 }
 span.desc {
     font-weight: 800;
@@ -59,7 +64,16 @@ span.desc {
 span.pool {
     padding: 0px 0px 0px 0px;
     font-size: 750%;
-    font-weight: 1000;
+    font-weight: 800;
+    text-align: center;
+    color: #fbde00;
+    width: 120px;
+}
+span.info {
+    clear: left;
+    padding: 0px 0px 0px 0px;
+    font-size: 100%;
+    /* font-weight: 1000; */
     color: #fbde00;
 }
 </style>
