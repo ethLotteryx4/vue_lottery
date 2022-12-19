@@ -2,7 +2,7 @@
     <div class="cell">
         <span class="number"> {{ number }} </span>
         <!-- <br> -->
-        <input class="count" type="number" step="0.01" min="0" v-model="value" @blur="trim" />
+        <input class="count" type="number" step="1" min="0" v-model="value" @blur="trim" />
     </div>
 </template>
 <style>
@@ -60,9 +60,9 @@ export default {
   },
   methods: {
     trim() {
-        var reg = /^[0-9]+[.]?[0-9]*$/
+        var reg = /^[0-9]+$/
         if (reg.test(this.value))
-            this.value = parseFloat(this.value)
+            this.value = parseInt(this.value)
         else 
             this.value = 0;
     }
