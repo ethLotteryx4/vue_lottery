@@ -107,6 +107,7 @@ input {
 span.txt {
     margin:15px 0px 10px 0px;
     color: #ffffff;
+    user-select:none;
 }
 div.store {
     margin-top: 20px;

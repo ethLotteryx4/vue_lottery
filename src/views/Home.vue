@@ -34,6 +34,7 @@ span.title {
     color: rgb(255, 255, 255);
     margin-top: 100px;
     margin-bottom: 100px;
+    user-select:none;
 }
 .main-container{
   /*  35 = footer  */

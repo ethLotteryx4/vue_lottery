@@ -61,6 +61,7 @@ span.desc {
     font-weight: 800;
     font-size:xxx-large;
     color: #3d4353;
+    user-select:none;
 }
 span.pool {
     padding: 0px 0px 0px 0px;
@@ -70,6 +71,7 @@ span.pool {
     color: #fbde00;
     width: 120px;
     height: 80px !important;
+    user-select:none;
 }
 span.info {
     clear: left;
