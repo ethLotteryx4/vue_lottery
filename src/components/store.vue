@@ -2,17 +2,7 @@
     <div class="store">
         <Form ref="form" />
         <div class="hstack">
-            <div class="vstack">
-                <div class="hstack">
-                    <span class="txt">账户：</span>
-                <input id="acc" ref="acc" placeholder="wallet-address" v-model="acc"/>
-                </div>
-                <div class="hstack">
-                    <span class="txt">私钥：</span>
-                <input id="pk" ref="pk" placeholder="private-key" v-model="pk" />
-                </div>
-            </div>
-            <button class="login" @click="login">登录</button>
+            <!-- <button class="login" @click="login">登录</button> -->
             <button class="buy" @click="submit">购买</button>
         </div>
     </div>
@@ -29,24 +19,26 @@ export default {
     },
     data () {
         return {
-            rows: [],
-            acc: "",
-            pk: ""
+            rows: []
         }
     },
-    created () {
-            this.acc = localStorage.getItem("acc");
-            this.pk = localStorage.getItem("pk");
+    mounted () {
+        this.login();
     },
     methods: {
         async login() {
-            var state = await utils.login(this.pk, this.acc);
+            if (utils.logged()) {
+                alert("已经登录！请勿重复登录！");
+                return;
+            }
+            var state = await utils.getWallet();
+            console.log(state)
             if (state) {
-                localStorage.setItem("acc", this.acc);
-                localStorage.setItem("pk", this.pk);
                 alert("登录成功！");
+                this.$parent.$refs.pool.refresh();
+                this.$parent.$refs.chain.refresh();
             } else {
-                alert("登录失败");
+                alert("登录失败！");
             }
         },
         submit() {
@@ -55,7 +47,7 @@ export default {
                 return;
             }
             var data = this.$refs.form.form_data();
-            if (utils.buy(data, this.pk, this.acc)) {
+            if (utils.buy(data)) {
                 alert("购买成功！")
             } else {
                 alert("购买失败")

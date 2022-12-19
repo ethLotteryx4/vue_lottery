@@ -2,8 +2,8 @@
     <div id="home">
         <span class="title">ETH 大乐透</span>
       <Store />
-      <Pool />
-      <Chain />
+      <Pool ref="pool"/>
+      <Chain ref="chain"/>
       <Foot />
     </div>
   </template>

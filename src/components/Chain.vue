@@ -46,8 +46,6 @@ export default {
     methods: {
         async refresh() {
             console.log('refreshed chain data')
-            var pk = document.getElementById("pk").value;
-            var acc = document.getElementById("acc").value;
             if (!utils.logged()) {
                 alert("请先登录！");
                 return;
