@@ -55,9 +55,9 @@ export default {
             var chain_hist = await utils.chain_data();
             console.log(chain_hist)
             chain_hist.forEach(phase => {
-                phase.forEach(data => {
+                phase.phase_data.forEach(data => {
                     this.chain_data.push({
-                        "phase":phase.phase,
+                        "phase":phase.phase + 1,
                         "winner":data.id,
                         "money": data.money,
                         "number": data.number
