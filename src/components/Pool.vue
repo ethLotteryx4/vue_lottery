@@ -4,7 +4,7 @@
         backgroundRepeat:'no-repeat',
         backgroundSize: '100%, 100%'}">
         <span class="desc">
-            当前第{{ phase }}期奖池：
+            当前第{{ phase }}期奖池:
         </span>
     <br>
         <span class="pool" @click="refresh">

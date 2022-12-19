@@ -70,7 +70,7 @@ button.login {
 }
 button.buy {
     background-color: #ffae00;
-        margin:36px 0px 20px 20px;
+        margin:36px 0px 20px 0px;
         width: 100px;
         height: 60px;
         font-size: 125%;
