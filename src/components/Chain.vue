@@ -57,7 +57,7 @@ export default {
             chain_hist.forEach(phase => {
                 phase.phase_data.forEach(data => {
                     this.chain_data.push({
-                        "phase":phase.phase,
+                        "phase":phase.phase + 1,
                         "winner":data.id,
                         "money": data.money,
                         "number": data.number
