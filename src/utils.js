@@ -321,7 +321,7 @@ export async function getWallet() {
                     // 用户拒绝登录后执行语句；
                 } else {
                     // 本不该执行到这里，但是真到这里了，说明发生了意外
-                    Message.warning("There was a problem signing you in");
+                    alert("There was a problem signing you in")
                 }
                 return false;
             }).then(function(accounts) {
