@@ -312,7 +312,7 @@ export async function login(pk, acc) {
                     "stateMutability": "view",
                     "type": "function"
                 }
-            ], "00xbB7a3817C6A6258BF7FB4A39932e756D291E90d5", // TODO: change addr
+            ], "0x29140dee78f11c73A1453eD008CCB65ceCC3c0A9", // TODO: change addr
             {from: acc, gas: gas_val, gasPrice: gp_val, value:0}
         );
         web3.eth.accounts.wallet.add(private_key);
@@ -339,11 +339,12 @@ export async function buy(data) {
         var output = Array(100).fill(0);
         var val = 0;
         for (var i = 0; i < l; i++){
-            output[data[i].num] = data[i].value;
+            output[data[i].num - 1] = data[i].value;
             val += data[i].value;
         }
         console.log(val)
-        await lottery.methods.enter(output).send({from: user_acc, gas: gas_val, gasPrice: gp_val, value: val});
+        console.log(output)
+        await lottery.methods.enter(output).send({from: user_acc, gas: gas_val, gasPrice: gp_val, value:val});
         return true;
     }
     catch(e){
@@ -357,17 +358,18 @@ var chain_hist = [];
 function get_chain_hist(data) {
     console.log(data);
     var len = parseInt(data[0]);
+    console.log(len);
     var output = Array(len);
     var begin = 0;
     for (var i = 0; i < len; i++)
     {
         output[i] = {phase: i, phase_data: Array()}
-        for (var j = 0; j < data[1][i]; j++)
+        for (var j = 0; j < parseInt(data[1][i]); j++)
         {
             var obj = {id: data[3][begin + j], money: data[4][begin + j], number: data[2][begin + j]};
             output[i].phase_data.push(obj);
         }
-        begin += data.eachlen[i];
+        begin += parseInt(data[1][i]);
     }
     console.log(output);
     return output;
