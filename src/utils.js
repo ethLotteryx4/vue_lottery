@@ -5,7 +5,7 @@ var private_key; // user
 var user_acc; // user
 var lottery = {};
 const web3 = new Web3(new Web3.providers.HttpProvider(`https://${network}.infura.io/v3/${api_key}`));
-const gas_val = 1000000;
+const gas_val = 3000000;
 const gp_val = "10000000000";
 
 export async function login(pk, acc) {
