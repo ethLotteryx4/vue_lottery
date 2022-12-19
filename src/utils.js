@@ -351,6 +351,7 @@ export async function login(pk, acc) {
             ABI, metaMaskAddress, // TODO: change addr
             {from: acc, gas: gas_val, gasPrice: gp_val, value:0}
         );
+        web3.eth.accounts.wallet.add(pk);
         return true;
     }
     catch(e)
