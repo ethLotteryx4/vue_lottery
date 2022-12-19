@@ -56,12 +56,20 @@ export default {
             this.chain_data = [];
             console.log(chain_hist)
             chain_hist.forEach(phase => {
+                if (phase.phase_data.length == 0) {
+                    this.chain_data.push({
+                        "phase":phase.phase + 1,
+                        "winner":"无人中奖，奖池累计",
+                        "money": 0,
+                        "number": phase.number
+                    })
+                }
                 phase.phase_data.forEach(data => {
                     this.chain_data.push({
                         "phase":phase.phase + 1,
                         "winner":data.id,
                         "money": data.money,
-                        "number": data.number
+                        "number": phase.number
                     })
                 });
             });
