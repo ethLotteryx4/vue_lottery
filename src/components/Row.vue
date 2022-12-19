@@ -35,7 +35,7 @@ export default {
             var ret = []
             this.$refs.cell.forEach(cell => {
                 ret.push({
-                    "number":cell.number,
+                    "num":cell.number,
                     "value": cell.value
                 })
             });
