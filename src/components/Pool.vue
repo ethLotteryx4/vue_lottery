@@ -58,6 +58,7 @@ div.pool {
     /* writing-mode: vertical-lr; */
 }
 span.desc {
+    margin-left: 15px;
     font-weight: 800;
     font-size:xxx-large;
     color: #3d4353;
