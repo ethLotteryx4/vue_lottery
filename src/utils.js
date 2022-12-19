@@ -363,10 +363,10 @@ function get_chain_hist(data) {
     var begin = 0;
     for (var i = 0; i < len; i++)
     {
-        output[i] = {phase: i, phase_data: Array()}
+        output[i] = {phase: i, number: data[2][i], phase_data: Array()}
         for (var j = 0; j < parseInt(data[1][i]); j++)
         {
-            var obj = {id: data[3][begin + j], money: data[4][begin + j], number: data[2][begin + j]};
+            var obj = {id: data[3][begin + j], money: data[4][begin + j]};
             output[i].phase_data.push(obj);
         }
         begin += parseInt(data[1][i]);
