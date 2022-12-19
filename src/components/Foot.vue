@@ -16,7 +16,7 @@
         // 版权说明的文字
         footerMsgCopyright: '本平台仅供课程展示用 - Powered By ',
         // 单位
-        footerMsgName: 'chuanmx miaohs zhangjy xiaht'
+        footerMsgName: ' Chuanmx Miaohs Zhangjy Xiaht'
       }
     }
   }
@@ -32,10 +32,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: blanchedalmond;
+    /* background-color: blanchedalmond; */
   }
   .source{
+    margin-left: 6px;
+    margin-top: 2px;
     font-weight: 600;
+    font-size: 14px;
   }
   </style>
   
