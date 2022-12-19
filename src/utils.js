@@ -308,9 +308,8 @@ const ABI = [
 export async function getWallet() {
     if (typeof window.ethereum === "undefined") {
         //没安装MetaMask钱包进行弹框提示
-        Message.warning("请安装MetaMask")
         alert("请先安装MetaMask,再访问次网站!")
-        Window.location.href = "https://metamask.io/";
+        window.location.replace("https://metamask.io/")
         return false;
     } else {
         //如果用户安装了MetaMask，你可以要求他们授权应用登录并获取其账号
@@ -321,7 +320,7 @@ export async function getWallet() {
                     // 用户拒绝登录后执行语句；
                 } else {
                     // 本不该执行到这里，但是真到这里了，说明发生了意外
-                    Message.warning("There was a problem signing you in");
+                    alert("There was a problem signing you in")
                 }
                 return false;
             }).then(function(accounts) {
