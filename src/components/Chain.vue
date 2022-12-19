@@ -53,6 +53,7 @@ export default {
                 return;
             }
             var chain_hist = await utils.chain_data();
+            this.chain_data = [];
             console.log(chain_hist)
             chain_hist.forEach(phase => {
                 phase.phase_data.forEach(data => {
@@ -76,6 +77,7 @@ div.chain {
     display: inline;
 }
 table {
+    padding: 20px 0px 100px 0px;
     margin:auto;
     justify-content: center;
     align-self: center;

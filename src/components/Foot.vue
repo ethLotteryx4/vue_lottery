@@ -32,6 +32,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: blanchedalmond;
   }
   .source{
     font-weight: 600;
