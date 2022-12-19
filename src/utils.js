@@ -309,7 +309,7 @@ export async function getWallet() {
     if (typeof window.ethereum === "undefined") {
         //没安装MetaMask钱包进行弹框提示
         Message.warning("请安装MetaMask")
-        alert("请先安装MetaMask,再访问次网站!")
+        alert("请先安装MetaMask, 再访问此网站!")
         Window.location.href = "https://metamask.io/";
         return false;
     } else {
