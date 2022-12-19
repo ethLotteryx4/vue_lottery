@@ -43,5 +43,6 @@ div.form {
     flex-direction:row;
     display:flex !important;
     justify-content:center;
+    border-radius: 2%;
 }
 </sytle>

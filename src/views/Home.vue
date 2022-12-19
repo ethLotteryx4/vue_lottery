@@ -1,5 +1,6 @@
 <template>
     <div id="home">
+      <Dialog ref="dialog" />
         <span class="title">ETH 大乐透</span>
       <Store />
       <Pool ref="pool"/>
@@ -14,18 +15,24 @@ import Store from "@/components/Store";
 import Pool from "@/components/Pool"
 import Chain from "@/components/Chain"
 import Foot from "@/components/Foot"
+import Dialog from "@/components/Dialog"
   export default {
       name: 'Home',
       components: {
           Store,
           Pool,
           Chain,
-          Foot
+          Foot,
+          Dialog
       }
   }
 </script>
 <style>
-body { padding:0px;margin: 0px;background:url("../assets/background.png")no-repeat; background-size: 100% 100% ;background-attachment: fixed;} 
+body { height: 100%;  width: 100%;padding:0px;margin: 0px;background:url("../assets/background.png")no-repeat; background-size: 100% 100% ;background-attachment: fixed;} 
+html {
+  height: 100%;
+  width: 100%;
+}
 
 span.title {
     padding: 0px 0px 0px 0px;
@@ -40,5 +47,12 @@ span.title {
   /*  35 = footer  */
   min-height: calc(100vh - 55px);
 }
-
+Dialog {
+  width: 100%;
+  height: 100%;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
 </style>

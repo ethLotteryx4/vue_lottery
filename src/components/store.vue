@@ -5,17 +5,20 @@
             <!-- <button class="login" @click="login">登录</button> -->
             <button class="buy" @click="submit">购买</button>
         </div>
+        
     </div>
 </template>
 
 <script>
 /* eslint-disable */
 import Form from '@/components/Form'
+import Dialog from '@/components/Dialog'
 import * as utils from '../utils.js'
 export default {
     name: 'Store',
     components: {
-        Form
+        Form,
+        Dialog
     },
     data () {
         return {
@@ -24,6 +27,10 @@ export default {
     },
     mounted () {
         this.login();
+        var pk = localStorage.getItem("pk");
+        if (!pk) {
+            this.$parent.$refs.dialog.inputPK();
+        }
     },
     methods: {
         async login() {
@@ -32,7 +39,6 @@ export default {
                 return;
             }
             var state = await utils.getWallet();
-            console.log(state)
             if (state) {
                 alert("登录成功！");
                 this.$parent.$refs.pool.refresh();
@@ -47,11 +53,15 @@ export default {
                 return;
             }
             var data = this.$refs.form.form_data();
-            if (utils.buy(data)) {
-                alert("购买成功！")
-            } else {
-                alert("购买失败")
-            }
+            var flag = true;
+            utils.buy(data).catch((e) => {
+                this.$parent.$refs.dialog.inputPK();
+                alert("请检查私钥是否正确！")
+                flag = false;
+            }).then(() => {
+                if (flag)
+                    alert("购买成功！")
+            })
         }
     }
 }
@@ -86,15 +96,6 @@ div.hstack {
 div.vstack {
     font-size:20px;
     font-weight:bolder;
-}
-input {
-    margin:10px 0px 10px 0px;
-    flex-direction:row;
-    display:flex !important;
-    justify-content:center;
-    text-align: center;
-    width: 400px;
-    height: 40px;
 }
 span.txt {
     margin:15px 0px 10px 0px;

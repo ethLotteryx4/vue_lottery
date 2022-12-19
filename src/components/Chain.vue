@@ -52,7 +52,6 @@ export default {
             }
             var chain_hist = await utils.chain_data();
             this.chain_data = [];
-            console.log(chain_hist)
             chain_hist.forEach(phase => {
                 if (phase.phase_data.length == 0) {
                     this.chain_data.push({
