@@ -12,7 +12,7 @@
         </span>
         <br>
         <span class="info">
-            (点击刷新当前奖池大小)
+            (点击刷新当前奖池大小, 单位wei)
         </span>
     </div>
 </template>
