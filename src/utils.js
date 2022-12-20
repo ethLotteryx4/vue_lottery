@@ -384,31 +384,8 @@ export async function getWallet() {
 				value: 0
 			});
             user_acc = accounts[0]
-			if (localStorage.getItem("pk"))
-				web3.eth.accounts.wallet.add(localStorage.getItem("pk"))//TODO:
             return true;
             
-    }
-}
-
-export async function login(pk, acc) {
-    if (!is_address(acc))
-        return false;
-    try
-    {
-        lottery = await new web3.eth.Contract(
-            ABI, metaMaskAddress, // TODO: change addr
-            {from: acc, gas: gas_val, gasPrice: gp_val, value:0}
-        );
-        await web3.eth.accounts.wallet.add(pk);
-        return true;
-    }
-    catch(e)
-    {
-        lottery = {};
-        web3.eth.accounts.wallet.clear();
-        console.log(e);
-        return false;
     }
 }
 
@@ -430,7 +407,7 @@ export async function buy(data) {
 		value: web3.utils.toHex(val),
  	 }];
 	 console.log(params)
-	ethereum.request(
+	await ethereum.request(
 		{
 			method: "eth_sendTransaction",
 			params: params,
@@ -485,8 +462,4 @@ export function is_address(acc) {
 
 export function logged() {
     return Object.keys(lottery).length != 0;
-}
-
-export function add_wallet(pk) {
-	web3.eth.accounts.wallet.add(pk);
 }

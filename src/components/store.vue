@@ -12,13 +12,11 @@
 <script>
 /* eslint-disable */
 import Form from '@/components/Form'
-import Dialog from '@/components/Dialog'
 import * as utils from '../utils.js'
 export default {
     name: 'Store',
     components: {
-        Form,
-        Dialog
+        Form
     },
     data () {
         return {
@@ -27,18 +25,9 @@ export default {
     },
     mounted () {
         this.login();
-        var pk = localStorage.getItem("pk");
-        console.log(pk)
-        if (!pk) {
-            this.$parent.$refs.dialog.inputPK();
-        }
     },
     methods: {
         async login() {
-            if (utils.logged()) {
-                alert("已经登录！请勿重复登录！");
-                return;
-            }
             var state = await utils.getWallet();
             if (state) {
                 alert("登录成功！");
@@ -55,14 +44,7 @@ export default {
             }
             var data = this.$refs.form.form_data();
             var flag = true;
-            utils.buy(data).catch((e) => {
-                this.$parent.$refs.dialog.inputPK();
-                alert("请检查私钥是否正确！")
-                flag = false;
-            }).then(() => {
-                if (flag)
-                    alert("购买成功！")
-            })
+            utils.buy(data).then(()=>{alert("购买成功")}).catch(()=>{alert("购买失败")})
         }
     }
 }

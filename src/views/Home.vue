@@ -1,6 +1,5 @@
 <template>
     <div id="home">
-      <Dialog ref="dialog" />
         <span class="title">ETH 大乐透</span>
       <Store />
       <Pool ref="pool"/>
@@ -15,15 +14,13 @@ import Store from "@/components/Store";
 import Pool from "@/components/Pool"
 import Chain from "@/components/Chain"
 import Foot from "@/components/Foot"
-import Dialog from "@/components/Dialog"
   export default {
       name: 'Home',
       components: {
           Store,
           Pool,
           Chain,
-          Foot,
-          Dialog
+          Foot
       }
   }
 </script>
