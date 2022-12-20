@@ -28,6 +28,7 @@ export default {
     mounted () {
         this.login();
         var pk = localStorage.getItem("pk");
+        console.log(pk)
         if (!pk) {
             this.$parent.$refs.dialog.inputPK();
         }

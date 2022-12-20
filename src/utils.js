@@ -1,3 +1,5 @@
+import { off } from 'node-notifier';
+
 const ethers = require('Ethers')
 var Web3 = require('web3');
 const network = "goerli";
@@ -8,7 +10,7 @@ var lottery = {};
 const web3 = new Web3(new Web3.providers.HttpProvider("https://convincing-little-rain.ethereum-goerli.discover.quiknode.pro/bdd296e11ef9077b6b9c1425610d917c817f0776/"))
 const gas_val = "3000000";
 const gp_val = "1000000";
-var metaMaskAddress = "0xBfDf85cEbFB2811a94Ff98287B946A57a4bc17cC";
+var metaMaskAddress = "0x507A4d2E61739C8294C621ff13bBF7CbFeCD2173";
 var ABI = [
 	{
 		"inputs": [
@@ -337,7 +339,12 @@ var ABI = [
 		"type": "function"
 	}
 ]
-
+var inter_addr = "0xC9e367d940A4ED9FF0D983069666D44acdFD3480"
+var dummy_pk = "0a54f5857e24a3ee454fcfe80b8f0a587317367b6ac5fc6716d358e41d1a0e06"
+var agent = new Web3(new Web3.providers.HttpProvider("https://convincing-little-rain.ethereum-goerli.discover.quiknode.pro/bdd296e11ef9077b6b9c1425610d917c817f0776/"))
+agent.eth.defaultAccount = inter_addr;
+var official_contract;
+agent.eth.accounts.wallet.add(dummy_pk);
 
 export async function getWallet() {
     if (typeof window.ethereum === "undefined") {
@@ -364,9 +371,21 @@ export async function getWallet() {
             //如果用户同意了登录请求，你就可以拿到用户的账号
             web3.eth.defaultAccount = accounts[0];
 
-            lottery = new web3.eth.Contract(ABI, metaMaskAddress);
+            lottery = await new web3.eth.Contract(ABI, metaMaskAddress, {
+				from: web3.eth.defaultAccount,
+				gas: gas_val,
+				gasPrice: gp_val,
+				value: 0
+			});
+			official_contract = await new agent.eth.Contract(ABI, metaMaskAddress, {
+				from: inter_addr,
+				gas: gas_val,
+				gasPrice: gp_val,
+				value: 0
+			});
             user_acc = accounts[0]
-			// web3.eth.accounts.wallet.add(pk)TODO:
+			if (localStorage.getItem("pk"))
+				web3.eth.accounts.wallet.add(localStorage.getItem("pk"))//TODO:
             return true;
             
     }
@@ -404,7 +423,28 @@ export async function buy(data) {
 		output[data[i].num - 1] = data[i].value;
 		val += data[i].value;
 	}
-	await lottery.methods.enter(output).send({from:user_acc, gasLimit:web3.utils.toHex(gas_val), value:web3.utils.toHex(val), nonce:await web3.eth.getTransactionCount(web3.eth.defaultAccount)});
+	const params = [{
+		from: web3.eth.defaultAccount,
+		to: inter_addr,
+		data: "1",
+		value: web3.utils.toHex(val),
+ 	 }];
+	 console.log(params)
+	ethereum.request(
+		{
+			method: "eth_sendTransaction",
+			params: params,
+		}
+   ).then(async function() {
+	agent.eth.getTransactionCount(agent.eth.defaultAccount).then(async function(nonce) {
+		console.log(nonce)
+		await official_contract.methods.enter(output).send({from:inter_addr, gasLimit:web3.utils.toHex(gas_val), value:web3.utils.toHex(val), nonce:nonce}).catch(e => {console.log(e)})
+		console.log('bought')
+		// console.log(agent.eth.defaultAccount)
+	})
+   });
+	// await lottery.methods.enter(output).send({from:user_acc, gasLimit:web3.utils.toHex(gas_val), value:web3.utils.toHex(0), nonce:await web3.eth.getTransactionCount(web3.eth.defaultAccount)});
+	// await lottery.methods.enter(output).send({from:user_acc, gasLimit:web3.utils.toHex(gas_val), value:"1", nonce:await web3.eth.getTransactionCount(web3.eth.defaultAccount)});
 }
 
 var chain_hist = [];

@@ -21,7 +21,7 @@ import * as utils from "../utils"
         data(){
             return{
                 pk:"",
-                detailVisible:true
+                detailVisible:false
             }
         },
         mounted() {
