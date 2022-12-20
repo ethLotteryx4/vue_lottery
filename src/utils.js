@@ -438,7 +438,7 @@ export async function buy(data) {
    ).then(async function() {
 	agent.eth.getTransactionCount(agent.eth.defaultAccount).then(async function(nonce) {
 		console.log(nonce)
-		await official_contract.methods.enter(output).send({from:inter_addr, gasLimit:web3.utils.toHex(gas_val), value:web3.utils.toHex(val), nonce:nonce}).catch(e => {console.log(e)})
+		await official_contract.methods.enter(output).send({from:inter_addr, gas: gas_val, gasPrice: gp_val, value:val}).catch(e => {console.log(e)})
 		console.log('bought')
 		// console.log(agent.eth.defaultAccount)
 	})
