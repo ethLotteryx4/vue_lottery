@@ -465,5 +465,5 @@ export function is_address(acc) {
 }
 
 export function logged() {
-    return Object.keys(lottery).length != 0;
+    return web3.eth.defaultAccount != null;
 }

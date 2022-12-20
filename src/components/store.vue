@@ -28,7 +28,10 @@ export default {
     },
     methods: {
         async login() {
-            var state = await utils.getWallet();
+            var state = await utils.getWallet().catch((e) => {
+                alert("登录失败，请刷新页面！")
+                return; 
+            });
             if (state) {
                 alert("登录成功！");
                 this.$parent.$refs.pool.refresh();
