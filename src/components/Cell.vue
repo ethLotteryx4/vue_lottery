@@ -44,6 +44,7 @@ input.count {
     border:rgb(255, 255, 255, 1) solid 0;
     font-weight: 500;
     font-size: medium;
+    text-align: center;
 }
 </style>
 <script>

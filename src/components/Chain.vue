@@ -52,6 +52,8 @@ export default {
             }
             var chain_hist = await utils.chain_data();
             this.chain_data = [];
+            if (chain_hist.length == 0)
+                alert("无历史信息！");
             chain_hist.forEach(phase => {
                 if (phase.phase_data.length == 0) {
                     this.chain_data.push({
