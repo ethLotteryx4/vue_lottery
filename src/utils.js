@@ -424,9 +424,9 @@ export async function pool_data() {
 }
 
 export function is_address(acc) {
-    return web3.utils.isAddress(acc)
+    return web3.utils.isAddress(acc);
 }
 
 export function logged() {
-    return Object.keys(lottery).length != 0
+    return Object.keys(lottery).length != 0;
 }
