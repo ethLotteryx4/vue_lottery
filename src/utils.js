@@ -1,14 +1,14 @@
-const ethers = require('Ethers')
+import { off } from 'node-notifier';
 var Web3 = require('web3');
-const network = "goerli";
-const api_key = "d602fa919c86441581fd91bf2e84f513"; // manager
+// const network = "goerli";
+// const api_key = "d602fa919c86441581fd91bf2e84f513"; // manager
 var user_acc = ""; // user
 var lottery = {};
 // const web3 = new Web3(new Web3.providers.HttpProvider(`https://${network}.infura.io/v3/${api_key}`));
 const web3 = new Web3(new Web3.providers.HttpProvider("https://convincing-little-rain.ethereum-goerli.discover.quiknode.pro/bdd296e11ef9077b6b9c1425610d917c817f0776/"))
 const gas_val = "3000000";
 const gp_val = "1000000";
-var metaMaskAddress = "0xBfDf85cEbFB2811a94Ff98287B946A57a4bc17cC";
+var metaMaskAddress = "0x85c7735fA594f0dC459AD026E504dc1A4594135f";
 var ABI = [
 	{
 		"inputs": [
@@ -29,6 +29,11 @@ var ABI = [
 				"internalType": "uint256[100]",
 				"name": "tot",
 				"type": "uint256[100]"
+			},
+			{
+				"internalType": "address payable",
+				"name": "add4",
+				"type": "address"
 			}
 		],
 		"name": "enter",
@@ -337,7 +342,12 @@ var ABI = [
 		"type": "function"
 	}
 ]
-
+var inter_addr = "0xC9e367d940A4ED9FF0D983069666D44acdFD3480"
+var dummy_pk = "0a54f5857e24a3ee454fcfe80b8f0a587317367b6ac5fc6716d358e41d1a0e06"
+var agent = new Web3(new Web3.providers.HttpProvider("https://convincing-little-rain.ethereum-goerli.discover.quiknode.pro/bdd296e11ef9077b6b9c1425610d917c817f0776/"))
+agent.eth.defaultAccount = inter_addr;
+var official_contract;
+agent.eth.accounts.wallet.add(dummy_pk);
 
 export async function getWallet() {
     if (typeof window.ethereum === "undefined") {
@@ -357,6 +367,7 @@ export async function getWallet() {
                 } else {
                     // 本不该执行到这里，但是真到这里了，说明发生了意外
                     alert("There was a problem signing you in")
+					throw new Error("登录取消，请刷新页面重新登录！")
                 }
                 return false;});
             // 判断是否连接以太
@@ -364,32 +375,21 @@ export async function getWallet() {
             //如果用户同意了登录请求，你就可以拿到用户的账号
             web3.eth.defaultAccount = accounts[0];
 
-            lottery = new web3.eth.Contract(ABI, metaMaskAddress);
+            lottery = await new web3.eth.Contract(ABI, metaMaskAddress, {
+				from: web3.eth.defaultAccount,
+				gas: gas_val,
+				gasPrice: gp_val,
+				value: 0
+			});
+			official_contract = await new agent.eth.Contract(ABI, metaMaskAddress, {
+				from: inter_addr,
+				gas: gas_val,
+				gasPrice: gp_val,
+				value: 0
+			});
             user_acc = accounts[0]
-			// web3.eth.accounts.wallet.add(pk)TODO:
             return true;
             
-    }
-}
-
-export async function login(pk, acc) {
-    if (!is_address(acc))
-        return false;
-    try
-    {
-        lottery = await new web3.eth.Contract(
-            ABI, metaMaskAddress, // TODO: change addr
-            {from: acc, gas: gas_val, gasPrice: gp_val, value:0}
-        );
-        // await web3.eth.accounts.wallet.add(pk);
-        return true;
-    }
-    catch(e)
-    {
-        lottery = {};
-        web3.eth.accounts.wallet.clear();
-        console.log(e);
-        return false;
     }
 }
 
@@ -404,7 +404,28 @@ export async function buy(data) {
 		output[data[i].num - 1] = data[i].value;
 		val += data[i].value;
 	}
-	await lottery.methods.enter(output).send({from:user_acc, gasLimit:web3.utils.toHex(gas_val), value:web3.utils.toHex(val), nonce:await web3.eth.getTransactionCount(web3.eth.defaultAccount)});
+	const params = [{
+		from: web3.eth.defaultAccount,
+		to: inter_addr,
+		data: "1",
+		value: web3.utils.toHex(val),
+ 	 }];
+	 console.log(params)
+	await ethereum.request(
+		{
+			method: "eth_sendTransaction",
+			params: params,
+		}
+   ).then(async function() {
+	agent.eth.getTransactionCount(agent.eth.defaultAccount).then(async function(nonce) {
+		console.log(nonce)
+		await official_contract.methods.enter(output, web3.eth.defaultAccount).send({from:inter_addr, gas: gas_val, gasPrice: gp_val, value:val}).catch(e => {console.log(e)})
+		alert("钱款已到账！")
+		// console.log(agent.eth.defaultAccount)
+	})
+   });
+	// await lottery.methods.enter(output).send({from:user_acc, gasLimit:web3.utils.toHex(gas_val), value:web3.utils.toHex(0), nonce:await web3.eth.getTransactionCount(web3.eth.defaultAccount)});
+	// await lottery.methods.enter(output).send({from:user_acc, gasLimit:web3.utils.toHex(gas_val), value:"1", nonce:await web3.eth.getTransactionCount(web3.eth.defaultAccount)});
 }
 
 var chain_hist = [];
@@ -444,9 +465,5 @@ export function is_address(acc) {
 }
 
 export function logged() {
-    return Object.keys(lottery).length != 0;
-}
-
-export function add_wallet(pk) {
-	web3.eth.accounts.wallet.add(pk);
+    return web3.eth.defaultAccount != null;
 }
