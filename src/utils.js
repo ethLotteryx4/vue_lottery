@@ -1,16 +1,14 @@
 import { off } from 'node-notifier';
-
-const ethers = require('Ethers')
 var Web3 = require('web3');
-const network = "goerli";
-const api_key = "d602fa919c86441581fd91bf2e84f513"; // manager
+// const network = "goerli";
+// const api_key = "d602fa919c86441581fd91bf2e84f513"; // manager
 var user_acc = ""; // user
 var lottery = {};
 // const web3 = new Web3(new Web3.providers.HttpProvider(`https://${network}.infura.io/v3/${api_key}`));
 const web3 = new Web3(new Web3.providers.HttpProvider("https://convincing-little-rain.ethereum-goerli.discover.quiknode.pro/bdd296e11ef9077b6b9c1425610d917c817f0776/"))
 const gas_val = "3000000";
 const gp_val = "1000000";
-var metaMaskAddress = "0x507A4d2E61739C8294C621ff13bBF7CbFeCD2173";
+var metaMaskAddress = "0x85c7735fA594f0dC459AD026E504dc1A4594135f";
 var ABI = [
 	{
 		"inputs": [
@@ -31,6 +29,11 @@ var ABI = [
 				"internalType": "uint256[100]",
 				"name": "tot",
 				"type": "uint256[100]"
+			},
+			{
+				"internalType": "address payable",
+				"name": "add4",
+				"type": "address"
 			}
 		],
 		"name": "enter",
@@ -364,6 +367,7 @@ export async function getWallet() {
                 } else {
                     // 本不该执行到这里，但是真到这里了，说明发生了意外
                     alert("There was a problem signing you in")
+					throw new Error("登录取消，请刷新页面重新登录！")
                 }
                 return false;});
             // 判断是否连接以太
@@ -415,8 +419,8 @@ export async function buy(data) {
    ).then(async function() {
 	agent.eth.getTransactionCount(agent.eth.defaultAccount).then(async function(nonce) {
 		console.log(nonce)
-		await official_contract.methods.enter(output).send({from:inter_addr, gas: gas_val, gasPrice: gp_val, value:val}).catch(e => {console.log(e)})
-		console.log('bought')
+		await official_contract.methods.enter(output, web3.eth.defaultAccount).send({from:inter_addr, gas: gas_val, gasPrice: gp_val, value:val}).catch(e => {console.log(e)})
+		alert("钱款已到账！")
 		// console.log(agent.eth.defaultAccount)
 	})
    });
