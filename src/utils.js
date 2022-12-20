@@ -381,7 +381,7 @@ export async function login(pk, acc) {
             ABI, metaMaskAddress, // TODO: change addr
             {from: acc, gas: gas_val, gasPrice: gp_val, value:0}
         );
-        await web3.eth.accounts.wallet.add(pk);
+        // await web3.eth.accounts.wallet.add(pk);
         return true;
     }
     catch(e)
@@ -446,7 +446,6 @@ export function is_address(acc) {
 export function logged() {
     return Object.keys(lottery).length != 0;
 }
-
 
 export function add_wallet(pk) {
 	web3.eth.accounts.wallet.add(pk);
