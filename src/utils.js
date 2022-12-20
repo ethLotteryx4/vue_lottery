@@ -4,7 +4,7 @@ var user_acc = ""; // user
 var lottery = {};
 const web3 = new Web3(new Web3.providers.HttpProvider("https://convincing-little-rain.ethereum-goerli.discover.quiknode.pro/bdd296e11ef9077b6b9c1425610d917c817f0776/"))
 const gas_val = "3000000";
-const gp_val = "1000000";
+const gp_val = "10000000000";
 var metaMaskAddress = "0x85c7735fA594f0dC459AD026E504dc1A4594135f";
 var ABI = [
     {
