@@ -59,7 +59,7 @@ div.dialog {
     left: 30%;
     top: 50%;
     margin: auto;
-    background-color: rgba(108, 176, 231, 0.865);
+    background-color: rgba(176, 192, 204, 0.865);
     justify-self: center;
     flex-direction:column;
     width: 800px;

@@ -447,7 +447,6 @@ export function logged() {
     return Object.keys(lottery).length != 0;
 }
 
-
 export function add_wallet(pk) {
 	web3.eth.accounts.wallet.add(pk);
 }
